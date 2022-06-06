@@ -1,31 +1,40 @@
 package code;
-import java.security.*;
-import java.lang.*;
-import java.util.*;
+
+import javax.crypto.Cipher;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
+import java.io.ByteArrayOutputStream;
+import java.security.SecureRandom;
+import java.util.Base64;
+import java.util.Scanner;
 
 
-public class Aufg_1 {
+public class Aufg_2 {
     public static void main(String[] args) {
         int a = 0;
         Scanner mode = new Scanner(System.in);
         Scanner in = new Scanner(System.in);
         System.out.println("Wählen sie einen Operationsmodus: ");
-        System.out.println("    1. SHA-Signatur erstellen");
-        System.out.println("    2. SHA-Signatur validieren");
+        System.out.println("    1. Mit AES-Verschlüsseln");
+        System.out.println("    2. Mit AES-Verschlüsseln, aber mit einem zufällig generierten Schlüssel");
+        System.out.println("    3. Mit AES-Entschlüsseln");
         System.out.println("Geben Sie ihre Auswahl als Nummer ein: ");
-        try {
+        try{
             a = mode.nextInt();
-        } catch (Exception e) {
+        }
+        catch (Exception e){
             System.out.println("Ungültige Eingabe! Geben sie eine Zahl, von den oben gezeigten ein!");
             return;
         }
         switch (a) {
             case 1 -> {
-                System.out.println("Bitte geben Sie einen Text ein:");
+                System.out.println("Bitte geben Sie einen Klartext ein:");
                 String message = in.nextLine();
-                System.out.println("Message: " + message);
+                System.out.println("Bitte geben Sie Ihren Schlüssel ein:");
+                String key = in.nextLine();
+                System.out.println("Nachricht: " + message);
                 try {
-                    System.out.println("Digest.: " + sha256(message));
+                    System.out.println("Verschlüsselte Nachricht: " + AESen(message, key));
                 } catch (Exception e) {
                     System.out.println("Error: " + e.getMessage());
                 }
@@ -37,7 +46,7 @@ public class Aufg_1 {
                 String sigin = in.nextLine();
                 String sigcalc = "";
                 try {
-                    sigcalc = sha256(tovalidate);
+                    //sigcalc = sha256(tovalidate);
                 } catch (Exception e) {
                     System.out.println("Error: " + e.getMessage());
                 }
@@ -55,22 +64,19 @@ public class Aufg_1 {
         }
     }
 
-    public static String sha256(String message) throws Exception{
-        MessageDigest md = MessageDigest.getInstance("SHA-256");
-        byte[] digest = md.digest(message.getBytes ());
-        return toHexString(digest, 2);
-    }
-    protected static String toHexString(byte[] data, int offset) {
-        if (offset <0) {
-            offset =0;
-        }
-        StringBuilder sb = new StringBuilder ();
-        for (int i=0; i<data.length; i++) {
-            sb.append(String.format("%02X", data[i]));
-            if ((offset >0) && (i+1<data.length) && ((i+1) % offset == 0)) {
-                sb.append(" ");
-            }
-        }
-        return sb.toString ();
+    public static String AESen(String message, String key) throws Exception {
+        SecretKeySpec keySpec = new SecretKeySpec(key.getBytes(), "AES");
+        SecureRandom prng = new SecureRandom();
+        byte[] iv = new byte[16];
+        prng.nextBytes(iv);
+        IvParameterSpec ivSpec = new IvParameterSpec(iv);
+        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+        cipher.init(Cipher.ENCRYPT_MODE , keySpec , ivSpec);
+        byte[] cipherText = cipher.doFinal(message.getBytes ());
+        ByteArrayOutputStream os = new ByteArrayOutputStream ();
+        os.write(iv);
+        os.write(cipherText);
+        Base64.Encoder encoder = Base64.getEncoder ();
+        return encoder.encodeToString(os.toByteArray ());
     }
 }
