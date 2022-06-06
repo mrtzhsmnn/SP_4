@@ -1,6 +1,5 @@
 package code;
 import java.security.*;
-import javax.crypto.*;
 import java.lang.*;
 import java.util.*;
 
@@ -15,7 +14,7 @@ public class Aufg_1 {
         System.out.println("Geben Sie ihre Auswahl als Nummer ein: ");
         int a = bool.nextInt();
         switch (a) {
-            case 1:
+            case 1 -> {
                 System.out.println("Bitte geben Sie einen Text ein:");
                 String message = in.nextLine();
                 System.out.println("Message: " + message);
@@ -24,8 +23,8 @@ public class Aufg_1 {
                 } catch (Exception e) {
                     System.out.println("Error: " + e.getMessage());
                 }
-                break;
-            case 2:
+            }
+            case 2 -> {
                 System.out.println("Bitte geben Sie einen Text ein:");
                 String tovalidate = in.nextLine();
                 System.out.println("Geben Sie nun die Signatur ein:");
@@ -45,10 +44,8 @@ public class Aufg_1 {
                     System.out.println("lautete: " + sigin);
                     System.out.println("Die korrekte Signatur lautet: " + sigcalc);
                 }
-                break;
-            default:
-                System.out.println("Ungültige Eingabe!");
-                break;
+            }
+            default -> System.out.println("Ungültige Eingabe!");
         }
     }
 
