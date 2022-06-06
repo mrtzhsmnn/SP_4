@@ -20,7 +20,7 @@ public class Main {
 		byte[] cipherText = rsa.doFinal(plainText.getBytes ());
 		Base64.Encoder encoder = Base64.getEncoder ();
 		String message = encoder.encodeToString(cipherText);
-		System.out.println("Verschlüssselte Nachricht:");
+		System.out.println("VerschlÃ¼ssselte Nachricht:");
 		System.out.println(message);
 		
 		
@@ -29,7 +29,7 @@ public class Main {
 		rsa.init(Cipher.DECRYPT_MODE, rsaKeyPair.getPrivate());
 		byte[] decipheredText = rsa.doFinal(a);
 		String b = new String(decipheredText);
-		System.out.println("Entschlüssselte Nachricht:");
+		System.out.println("EntschlÃ¼ssselte Nachricht:");
 		System.out.println(b);
 	}
 }
