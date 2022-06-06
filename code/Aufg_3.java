@@ -34,24 +34,25 @@ public class Aufg_3 {
 		System.out.println("Soll der veschlüsselte Text auch wieder entschlüsselt werden? (j/n)");
 		Scanner sc2 = new Scanner(System.in);
 		String answer=sc2.nextLine();
-		if(answer.equals("j")){
-			System.out.println("Der Text wird nun wieder entschlüsselt...");
-			Base64.Decoder decoder= Base64.getDecoder();
-			byte[] a= decoder.decode(message);
-			rsa.init(Cipher.DECRYPT_MODE, rsaKeyPair.getPrivate());
-			byte[] decipheredText = rsa.doFinal(a);
-			String b = new String(decipheredText);
-			System.out.println("Entschlüssselte Nachricht:");
-			System.out.println(b);
-			System.exit(0);
-		}
-		if(answer.equals("n")){
-			System.out.println("Das Programm wird beendet.");
-			System.exit(0);
-		}
-		else{
-			System.out.println("Falsche Eingabe. Das Programm wird beendet.");
-			System.exit(0);
+		switch (answer) {
+			case "j":
+				System.out.println("Der Text wird nun wieder entschlüsselt...");
+				Base64.Decoder decoder = Base64.getDecoder();
+				byte[] a = decoder.decode(message);
+				rsa.init(Cipher.DECRYPT_MODE, rsaKeyPair.getPrivate());
+				byte[] decipheredText = rsa.doFinal(a);
+				String b = new String(decipheredText);
+				System.out.println("Entschlüssselte Nachricht:");
+				System.out.println(b);
+				System.exit(0);
+			case "n":
+				System.out.println("Das Programm wird beendet.");
+				System.exit(0);
+			default:
+				System.out.println("Falsche Eingabe. Das Programm wird beendet.");
+				System.exit(0);
 		}
 	}
 }
+
+
