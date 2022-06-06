@@ -6,13 +6,19 @@ import java.util.*;
 
 public class Aufg_1 {
     public static void main(String[] args) {
-        Scanner bool = new Scanner(System.in);
+        int a = 0;
+        Scanner mode = new Scanner(System.in);
         Scanner in = new Scanner(System.in);
         System.out.println("Wählen sie einen Operationsmodus: ");
         System.out.println("    1. SHA-Signatur erstellen");
         System.out.println("    2. SHA-Signatur validieren");
         System.out.println("Geben Sie ihre Auswahl als Nummer ein: ");
-        int a = bool.nextInt();
+        try {
+            a = mode.nextInt();
+        } catch (Exception e) {
+            System.out.println("Ungültige Eingabe! Geben sie eine Zahl, von den oben gezeigten ein!");
+            return;
+        }
         switch (a) {
             case 1 -> {
                 System.out.println("Bitte geben Sie einen Text ein:");
