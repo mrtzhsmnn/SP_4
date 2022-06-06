@@ -9,8 +9,8 @@ public class Aufg_1 {
         Scanner bool = new Scanner(System.in);
         Scanner in = new Scanner(System.in);
         System.out.println("Wählen sie einen Operationsmodus: ");
-        System.out.println("    1. RSA-Signatur erstellen");
-        System.out.println("    2. RSA-Signatur validieren");
+        System.out.println("    1. SHA-Signatur erstellen");
+        System.out.println("    2. SHA-Signatur validieren");
         System.out.println("Geben Sie ihre Auswahl als Nummer ein: ");
         int a = bool.nextInt();
         switch (a) {
