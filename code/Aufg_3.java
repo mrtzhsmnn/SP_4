@@ -1,11 +1,12 @@
+package code;
+
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
-import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.util.Base64;
 import javax.crypto.Cipher;
 
-public class Main {
+public class Aufg_3 {
 
 	public static void main(String[] args) throws Exception{
 		
