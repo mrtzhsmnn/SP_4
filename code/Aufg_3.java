@@ -11,16 +11,19 @@ import javax.crypto.Cipher;
 public class Aufg_3 {
 
 	public static void main(String[] args) throws Exception{
+		//Schlüsselpaar generieren
 		System.out.println("Es wird ein Schlüsselpaar generiert...");
 		int keysize=2000;
 		KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance("RSA");
 		keyPairGen.initialize(keysize);
 		KeyPair rsaKeyPair = keyPairGen.generateKeyPair ();
 		System.out.println("Schlüsselpaar generiert!");
+		//Text einlesen
 		System.out.println("Geben Sie einen zu verschlüsselnden Text ein:");
 		Scanner sc = new Scanner(System.in);
 		String text=sc.nextLine();
 		System.out.println("Der Text wird verschlüsselt...");
+		//Verschlüsselung
 		String plainText = text;
 		PublicKey publicKey = rsaKeyPair.getPublic ();
 		Cipher rsa = Cipher.getInstance("RSA");
@@ -30,7 +33,7 @@ public class Aufg_3 {
 		String message = encoder.encodeToString(cipherText);
 		System.out.println("Verschlüssselte Nachricht:");
 		System.out.println(message);
-		
+		//Eventuelle Entschlüsselung
 		System.out.println("Soll der veschlüsselte Text auch wieder entschlüsselt werden? (j/n)");
 		Scanner sc2 = new Scanner(System.in);
 		String answer=sc2.nextLine();
