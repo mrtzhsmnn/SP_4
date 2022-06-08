@@ -6,7 +6,7 @@ import java.util.*;
 
 public class Aufg_1 {
     public static void main(String[] args) {
-        int a = 0;
+        int a;
         Scanner mode = new Scanner(System.in);
         Scanner in = new Scanner(System.in);
         System.out.println("Wählen sie einen Operationsmodus: ");
