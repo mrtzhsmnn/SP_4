@@ -4,7 +4,6 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.ByteArrayOutputStream;
-import java.security.KeyPair;
 import java.security.SecureRandom;
 import java.util.Base64;
 import java.util.Scanner;
@@ -12,7 +11,7 @@ import java.util.Scanner;
 
 public class Aufg_2 {
     public static void main(String[] args) {
-        int a = 0;
+        int a;
         Scanner mode = new Scanner(System.in);
         Scanner in = new Scanner(System.in);
         System.out.println("Wählen sie einen Operationsmodus: ");
@@ -111,21 +110,15 @@ public class Aufg_2 {
         byte[] iv = new byte[16];
         Base64.Decoder decoder = Base64.getDecoder();
         byte[] a = decoder.decode(message);
-        for (int i = 0; i < 16; i++) {
-            iv[i] = a[i];
-        }
+        System.arraycopy(a, 0, iv, 0, 16);
         IvParameterSpec ivSpec = new IvParameterSpec(iv);
         byte[] newa = new byte[a.length - 16];
-        for (int i = 16; i < a.length; i++) {
-            newa[i - 16] = a[i];
-        }
+        System.arraycopy(a, 16, newa, 0, a.length - 16);
         a = newa;
         Cipher aes = Cipher.getInstance
                 ("AES/CBC/PKCS5Padding");
         aes.init(Cipher.DECRYPT_MODE, keySpec, ivSpec);
         byte[] decipheredText = aes.doFinal(a);
-        String b = new String(decipheredText);
-        //b = b.substring(15);
-        return b;
+        return new String(decipheredText);
     }
 }
