@@ -4,6 +4,7 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.ByteArrayOutputStream;
+import java.security.KeyPair;
 import java.security.SecureRandom;
 import java.util.Base64;
 import java.util.Scanner;
@@ -40,24 +41,32 @@ public class Aufg_2 {
                 }
             }
             case 2 -> {
-                System.out.println("Bitte geben Sie einen Text ein:");
-                String tovalidate = in.nextLine();
-                System.out.println("Geben Sie nun die Signatur ein:");
-                String sigin = in.nextLine();
-                String sigcalc = "";
+                System.out.println("Bitte geben Sie einen Klartext ein:");
+                String message = in.nextLine();
+                System.out.println("Dieser Text wird nun mit einem zufällig generierten Schlüssel verschlüsselt.");
+                SecureRandom random = new SecureRandom();
+                String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+                StringBuilder sb = new StringBuilder(16);
+                for(int i = 0; i < 16; i++)
+                    sb.append(AB.charAt(random.nextInt(AB.length())));
+                String key = sb.toString();
                 try {
-                    //sigcalc = sha256(tovalidate);
+                    System.out.println("Verschlüsselte Nachricht: " + AESen(message, key));
+                    System.out.println("Schlüssel: " + key);
                 } catch (Exception e) {
                     System.out.println("Error: " + e.getMessage());
                 }
-                if (sigin.equals(sigcalc)) {
-                    System.out.println("Die Signatur zu der Nachricht: " + tovalidate);
-                    System.out.println("ist korrekt!");
-                } else {
-                    System.out.println("Ihre übergebene Signatur ist ungültig.");
-                    System.out.println("Ihre Signatur zu der Nachricht: " + tovalidate);
-                    System.out.println("lautete: " + sigin);
-                    System.out.println("Die korrekte Signatur lautet: " + sigcalc);
+            }
+            case 3 -> {
+                System.out.println("Bitte geben Sie einen verschl. Text ein:");
+                String message = in.nextLine();
+                System.out.println("Bitte geben Sie Ihren Schlüssel ein:");
+                String key = in.nextLine();
+                System.out.println("Nachricht: " + message);
+                try {
+                    System.out.println("Entschlüsselte Nachricht: " + AESde(message, key));
+                } catch (Exception e) {
+                    System.out.println("Error: " + e.getMessage());
                 }
             }
             default -> System.out.println("Ungültige Eingabe!");
@@ -78,5 +87,22 @@ public class Aufg_2 {
         os.write(cipherText);
         Base64.Encoder encoder = Base64.getEncoder ();
         return encoder.encodeToString(os.toByteArray ());
+    }
+    public static String AESde(String message, String key) throws Exception {
+        SecretKeySpec keySpec = new SecretKeySpec(key.getBytes(), "AES");
+        SecureRandom prng = new SecureRandom();
+        byte[] iv = new byte[16];
+        prng.nextBytes(iv);
+        IvParameterSpec ivSpec = new IvParameterSpec(iv);
+        System.out.println(message.length());
+        Base64.Decoder decoder = Base64.getDecoder();
+        byte[] a = decoder.decode(message);
+        System.out.println(a.length);
+        Cipher aes = Cipher.getInstance("AES/CBC/PKCS5Padding");
+        aes.init(Cipher.DECRYPT_MODE, keySpec, ivSpec);
+        byte[] decipheredText = aes.doFinal(a);
+        String b = new String(decipheredText);
+        b = b.substring(15);
+        return b;
     }
 }
