@@ -73,7 +73,6 @@ public class Aufg_4 {
                         break;
                 }
             }
-
         }
 
         System.out.println("Das Programm wird beendet.");
