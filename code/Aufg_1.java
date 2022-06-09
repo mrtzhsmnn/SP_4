@@ -53,8 +53,8 @@ public class Aufg_1 {
                             "Nachricht: " + tovalidate);
                     System.out.println("ist korrekt!");
                 } else {
-                    System.out.println("Ihre übergebene Signatur ist" +
-                            " ungültig.");
+                    System.out.println("Ihre übergebene " +
+                            "Signatur ist ungültig.");
                     System.out.println("Ihre Signatur zu der " +
                             "Nachricht: " + tovalidate);
                     System.out.println("lautete: " + sigin);
