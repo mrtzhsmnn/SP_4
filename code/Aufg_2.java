@@ -67,7 +67,8 @@ public class Aufg_2 {
                 }
             }
             case 3 -> {
-                System.out.println("Bitte geben Sie einen verschl. Text ein:");
+                System.out.println("Bitte geben Sie einen " +
+                        "verschl. Text ein:");
                 String message = in.nextLine();
                 System.out.println("Bitte geben Sie Ihren" +
                         " Schlüssel ein:");

@@ -72,6 +72,7 @@ public class Aufg_1 {
         byte[] digest = md.digest(message.getBytes ());
         return toHexString(digest, 2);
     }
+
     protected static String toHexString(byte[] data, int offset) {
         if (offset <0) {
             offset =0;
