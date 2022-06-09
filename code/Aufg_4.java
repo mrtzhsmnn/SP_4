@@ -13,18 +13,21 @@ public class Aufg_4 {
         int i = 0;
         while (i == 0) {
             Scanner input = new Scanner(System.in);
-            System.out.println("Geben Sie einen zu signierenden Text ein: ");
+            System.out.println
+                ("Geben Sie einen zu signierenden Text ein: ");
             String text = input.nextLine();
-            System.out.println("Es wird ein neues Schlüsselpaar erzeugt ...");
+            System.out.println
+                ("Neues Schlüsselpaar wird erzeugt ...");
             KeyPair keypair = generateKeyPair();
-            System.out.println("Schlüsselpaar erzeugt!");
-            System.out.println("----------------------------------------------------");
+            System.out.println
+                ("Schlüsselpaar erzeugt!");
+            System.out.println("---------------------------");
             System.out.println("Public Key:");
             System.out.println(keypair.getPublic());
             System.out.println("Private Key:");
             System.out.println(keypair.getPrivate());
-            System.out.println("----------------------------------------------------");
-            System.out.println("Der Text wird signiert ...");
+            System.out.println("---------------------------");
+            System.out.println("Text wird signiert ...");
             String signature = sign(text, keypair);
             System.out.println("Text signiert!");
             System.out.println("Signatur: ");
@@ -32,17 +35,20 @@ public class Aufg_4 {
 
             int j = 0;
             while (j == 0) {
-                System.out.println("----------------------------------------------------");
-                System.out.println("Soll die Signatur verifiziert werden? (j/n)");
+                System.out.println("---------------------------");
+                System.out.println
+                        ("Signatur verifizieren? (j/n)");
                 String answerA = input.nextLine();
                 switch (answerA) {
                     case "j":
-                        System.out.println("Der Text wird verifiziert ...");
-                        boolean verified = verify(text, signature, keypair.getPublic());
+                        System.out.println
+                                ("Der Text wird verifiziert ...");
+                        boolean verified = verify(text,
+                                signature, keypair.getPublic());
                         if (verified) {
-                            System.out.println("Signatur verifiziert!");
+                            System.out.println("Verifiziert!");
                         } else {
-                            System.out.println("Signatur ungültig!");
+                            System.out.println("Ungültig!");
                         }
                         j = 1;
                         break;
@@ -50,15 +56,17 @@ public class Aufg_4 {
                         j = 1;
                         break;
                     default:
-                        System.out.println("Falsche Eingabe! Benutzung: j/n");
+                        System.out.println
+                            ("Falsche Eingabe! Benutzung: j/n");
                         break;
                 }
             }
 
             int k = 0;
             while (k == 0) {
-                System.out.println("----------------------------------------------------");
-                System.out.println("Soll ein weiterer Text signiert werden? (j/n)");
+                System.out.println("---------------------------");
+                System.out.println
+                    ("Weiteren Text signieren? (j/n)");
                 String answerB = input.nextLine();
                 switch (answerB) {
                     case "j":
@@ -69,7 +77,8 @@ public class Aufg_4 {
                         i = 1;
                         break;
                     default:
-                        System.out.println("Falsche Eingabe! Benutzung: j/n");
+                        System.out.println
+                            ("Falsche Eingabe! Benutzung: j/n");
                         break;
                 }
             }
@@ -87,26 +96,23 @@ public class Aufg_4 {
         return keyPairGen.generateKeyPair();
     }
 
-    public static String sign(String text, KeyPair keypair) throws Exception {
-        java.security.PrivateKey privateKey = keypair.getPrivate();
+    public static String sign
+    (String text, KeyPair keypair) throws Exception {
+        java.security.PrivateKey privKey = keypair.getPrivate();
         Signature rsa = Signature.getInstance("SHA256withRSA");
-        rsa.initSign(privateKey);
+        rsa.initSign(privKey);
         rsa.update(text.getBytes());
         byte[] signature = rsa.sign();
         Base64.Encoder encoder = Base64.getEncoder();
         return encoder.encodeToString(signature);
     }
 
-    public static boolean verify(String text, String signature, PublicKey publicKey) throws Exception {
+    public static boolean verify
+    (String text, String sig, PublicKey pubKey) throws Exception {
         Signature rsa = Signature.getInstance("SHA256withRSA");
-        rsa.initVerify(publicKey);
+        rsa.initVerify(pubKey);
         rsa.update(text.getBytes());
-        byte[] signatureBytes = Base64.getDecoder().decode(signature);
-        return rsa.verify(signatureBytes);
+        byte[] sBytes = Base64.getDecoder().decode(sig);
+        return rsa.verify(sBytes);
     }
 }
-
-
-
-
-
